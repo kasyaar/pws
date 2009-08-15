@@ -19,6 +19,7 @@
     <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
      */
     class <xsl:value-of select="@name"/><xsl:value-of select="$ext"/>
+            <!-- A condition that add extends sentence into class declaration if it exist -->
 			<xsl:if test="xsd:complexContent/xsd:extension"> extends <xsl:value-of select="php:functionString('substr', $base, php:functionString('strpos', $base, ':')+1)"/><xsl:value-of select="$ext"/>
 			</xsl:if>
     {<xsl:apply-templates/>
