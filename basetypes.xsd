@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/someservice"
+	xmlns:tns="http://www.example.org/someservice" elementFormDefault="qualified">
+	<complexType name="Machinery">
+    <annotation>
+    <documentation>Актив типа строй техника</documentation>
+    <appinfo>someAnnotation</appinfo>
+    </annotation>
+        <complexContent>
+            <extension base="tns:Asset">
+                <sequence>
+                    <element name="producer" type="string"></element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+	<complexType name="Vehicle">
+        <annotation>
+            <documentation>Актив типа машина</documentation>
+        </annotation>
+        <complexContent>
+            <extension base="tns:Asset">
+                <sequence>
+                    <element name="model" type="string"></element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+	<complexType name="Asset">
+	<annotation>
+	<documentation>Базовый класс для всех активов</documentation>
+	</annotation>
+		<sequence>
+			<element name="price" type="float"></element>
+			<element name="leaseTerm" type="integer"></element>
+		</sequence>
+	</complexType>
+
+	
+	
+</schema>
