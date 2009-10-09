@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>PWS</name>
+ <uri>http://bgnev.com</uri>
+ <summary>summary</summary>
+ <description>description</description>
+ <lead>
+  <name>Dmitry</name>
+  <user>kasya</user>
+  <email>kasyaar@beginevolution.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-10-09</date>
+ <time>06:42:14</time>
+ <version>
+  <release>0.0.4</release>
+  <api>0.0.4</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+ <notes>
+notes
+ </notes>
+ <contents>
+  <dir baseinstalldir="PWS" name="/">
+   <file baseinstalldir="PWS" md5sum="dd0ff595a152306b88ebfa07fac2f875" name="xsl/basetypes.xsl" role="php" />
+   <file baseinstalldir="PWS" md5sum="f22c52bd9d99b5f62fb2965a50bd2d66" name="xsl/classmap.xsl" role="data" />
+   <file baseinstalldir="PWS" md5sum="be36a00d9460bf8199a12a8d0c0b63e5" name="xsl/transport.xsl" role="data" />
+   <file baseinstalldir="PWS" md5sum="54f8549a926dff926453d30893478ff5" name="FEATURES" role="data" />
+   <file baseinstalldir="PWS" md5sum="7ad13841a545be7f1a5e1ddb9d4d3c66" name="package-local.xml" role="data" />
+   <file baseinstalldir="PWS" md5sum="6ed3bc88ed062524f6b3202bf1bb9c69" name="PWS_BaseTypesGenerator.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="01e06a1b1e56fcf5d1bc70356a16989e" name="PWS_Generator.php" role="php" />
+   <file baseinstalldir="" md5sum="a40fa98c4f83e7e4a99eb07fc62307ac" name="xsd2php" role="script">
+    <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="" md5sum="7192c27d7a0003d089f521f14ba7c3ee" name="xsd2php.bat" role="script" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease>
+  <filelist>
+   <install as="xsd2php.bat" name="xsd2php.bat" />
+   <install as="xsd2php" name="xsd2php" />
+  </filelist>
+ </phprelease>
+ <changelog>
+  <release>
+   <version>
+    <release>0.0.1</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-10-02</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.2</release>
+    <api>0.0.2</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-10-02</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.3</release>
+    <api>0.0.3</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-10-02</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.4</release>
+    <api>0.0.4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-10-09</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+ </changelog>
+</package>
