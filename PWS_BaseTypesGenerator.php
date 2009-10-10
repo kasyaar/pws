@@ -8,7 +8,7 @@ class PWS_BaseTypesGenerator
         $this->schema = new DOMDocument();
         $this->schema->load($schemaPath);
         $this->stylesheet = new DOMDocument();
-        $this->stylesheet->load(dirname(__FILE__).'/xsl/basetypes.xsl');
+        $this->stylesheet->load('@DATA-DIR@/PWS/xsl/basetypes.xsl');
     }
     public function process()
     {

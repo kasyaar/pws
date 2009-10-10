@@ -10,11 +10,11 @@
   <email>kasyaar@beginevolution.com</email>
   <active>yes</active>
  </lead>
- <date>2009-10-02</date>
- <time>18:03:11</time>
+ <date>2009-10-10</date>
+ <time>14:12:49</time>
  <version>
-  <release>0.0.4</release>
-  <api>0.0.4</api>
+  <release>0.0.5</release>
+  <api>0.0.5</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -26,11 +26,16 @@ notes
  </notes>
  <contents>
   <dir baseinstalldir="PWS" name="/">
-   <file baseinstalldir="PWS" md5sum="dd0ff595a152306b88ebfa07fac2f875" name="xsl/basetypes.xsl" role="php" />
+   <file baseinstalldir="PWS" md5sum="dd0ff595a152306b88ebfa07fac2f875" name="xsl/basetypes.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="f22c52bd9d99b5f62fb2965a50bd2d66" name="xsl/classmap.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="be36a00d9460bf8199a12a8d0c0b63e5" name="xsl/transport.xsl" role="data" />
-   <file baseinstalldir="PWS" md5sum="f23d0efd78148b9c30ade4083717f861" name="FEATURES" role="data" />
-   <file baseinstalldir="PWS" md5sum="6ed3bc88ed062524f6b3202bf1bb9c69" name="PWS_BaseTypesGenerator.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="54f8549a926dff926453d30893478ff5" name="FEATURES" role="data" />
+   <file baseinstalldir="PWS" md5sum="6a0fec064efd022fbac0a58e13be87b9" name="package-local.xml" role="data" />
+   <file baseinstalldir="PWS" md5sum="3fed826279062c5a1aa49acfe7a300f8" name="PWS_BaseTypesGenerator.php" role="php">
+    <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="PWS" md5sum="01e06a1b1e56fcf5d1bc70356a16989e" name="PWS_Generator.php" role="php" />
    <file baseinstalldir="" md5sum="a40fa98c4f83e7e4a99eb07fc62307ac" name="xsd2php" role="script">
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
@@ -110,6 +115,21 @@ notes
     <api>alpha</api>
    </stability>
    <date>2009-10-02</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.5</release>
+    <api>0.0.5</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-10-10</date>
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 notes
