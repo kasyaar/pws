@@ -1,5 +1,5 @@
 #!/usr/bin/env php
 <?php
-include_once 'PWS/PWS_BaseTypesGenerator.php';
+include_once '@PEAR-DIR@/PWS/generator/PWS_BaseTypesGenerator.php';
 $generator = new PWS_BaseTypesGenerator($argv[1]);
 $generator->process();
