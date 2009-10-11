@@ -28,7 +28,7 @@
    
     <xsl:template match="xsd:attribute|//xsd:sequence/xsd:element|//xsd:all/xsd:element">
         <xsl:variable name="methodName" select="php:functionString('ucwords', @name)"/>
-        public $<xsl:value-of select="@name"/>;//<xsl:value-of select="@type"/>
+        private $<xsl:value-of select="@name"/>;//<xsl:value-of select="@type"/>
         public function get<xsl:value-of select="$methodName"/>() {
             return $this-><xsl:value-of select="@name"/>;
         }
