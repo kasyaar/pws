@@ -2,5 +2,10 @@
 <project name="pws" default="generate" basedir=".">
     <target name="generate">
         <echo>Generating...</echo>
+        <copy todir="${currentdir}">
+            <fileset dir="@DATA-DIR@/PWS/skel">
+                <include name="**" />
+            </fileset>
+        </copy>
     </target>
 </project>

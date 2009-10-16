@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+phing -f @PEAR-DIR@/PWS/build.xml -Dcurrentdir=`pwd` generate 
