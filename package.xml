@@ -2,6 +2,7 @@
 <package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
  <name>PWS</name>
  <channel>pear.bgnev.com</channel>
+ <!--<uri>http://pear.bgnev.com</uri>-->
  <summary>summary</summary>
  <description>description</description>
  <lead>
@@ -10,11 +11,11 @@
   <email>kasyaar@beginevolution.com</email>
   <active>yes</active>
  </lead>
- <date>2009-10-11</date>
- <time>09:58:02</time>
+ <date>2009-10-16</date>
+ <time>12:18:28</time>
  <version>
-  <release>0.0.5</release>
-  <api>0.0.5</api>
+  <release>0.0.6</release>
+  <api>0.0.6</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -31,23 +32,27 @@ notes
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
    </file>
    <file baseinstalldir="PWS" md5sum="01e06a1b1e56fcf5d1bc70356a16989e" name="generator/PWS_Generator.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="b4e9d590280d5ac57c2d7abbfc5de8ba" name="lib/addendum-0.3.2/annotations.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="9d1439e76e652f8276f8555bae39b55d" name="lib/addendum-0.3.2/LICENSE" role="data" />
-   <file baseinstalldir="PWS" md5sum="1f065f668e1218794e38f09ca3f60d61" name="lib/addendum-0.3.2/annotations/annotation_parser.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="89dd89ae0b0886e69bce2b7141de10be" name="lib/addendum-0.3.2/annotations/doc_comment.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="0f483f37a86020bb92580d681572b0c2" name="lib/addendum-0.3.2/annotations/tests/acceptance_test.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="6f7c71b8d8acf5d3d8e5b2eca7f6b2e8" name="lib/addendum-0.3.2/annotations/tests/all_tests.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="24f9e13fe0b3c4df311c4ff40a1d9e03" name="lib/addendum-0.3.2/annotations/tests/annotation_parser_test.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="391f33de68124b74b245985adcc25b0a" name="lib/addendum-0.3.2/annotations/tests/annotation_test.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="c44eb0a49a8547a7be817b72f3182df8" name="lib/addendum-0.3.2/annotations/tests/constrained_annotation_test.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="8a7f254bc34ef875e4470313367a9c4a" name="lib/addendum-0.3.2/annotations/tests/doc_comment_test.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="7ec40a2bd3570686a09e15d11cdf80a8" name="lib/hbx_manager.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="016ac7b2b2f16e4c0a877815c9590a65" name="lib/PWS_Filesystem.class.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="b4e9d590280d5ac57c2d7abbfc5de8ba" name="lib/addendum/annotations.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="9d1439e76e652f8276f8555bae39b55d" name="lib/addendum/LICENSE" role="data" />
+   <file baseinstalldir="PWS" md5sum="1f065f668e1218794e38f09ca3f60d61" name="lib/addendum/annotations/annotation_parser.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="89dd89ae0b0886e69bce2b7141de10be" name="lib/addendum/annotations/doc_comment.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="0f483f37a86020bb92580d681572b0c2" name="lib/addendum/annotations/tests/acceptance_test.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="6f7c71b8d8acf5d3d8e5b2eca7f6b2e8" name="lib/addendum/annotations/tests/all_tests.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="24f9e13fe0b3c4df311c4ff40a1d9e03" name="lib/addendum/annotations/tests/annotation_parser_test.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="391f33de68124b74b245985adcc25b0a" name="lib/addendum/annotations/tests/annotation_test.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="c44eb0a49a8547a7be817b72f3182df8" name="lib/addendum/annotations/tests/constrained_annotation_test.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="8a7f254bc34ef875e4470313367a9c4a" name="lib/addendum/annotations/tests/doc_comment_test.php" role="php" />
    <file baseinstalldir="PWS" md5sum="0ab8f647983f0fd9f830b540465e0389" name="skel/index.php" role="php" />
    <file baseinstalldir="PWS" md5sum="2fc4616fa4403de46b08816ad1bb8162" name="skel/lib/Controller.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="ef7d54858d19d70222c2bb2e896fcc61" name="tests/PWS_FilesystemTest.class.php" role="test" />
    <file baseinstalldir="PWS" md5sum="7387f52b73cab04eaefe77faa7463f41" name="xsl/basetypes.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="f22c52bd9d99b5f62fb2965a50bd2d66" name="xsl/classmap.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="be36a00d9460bf8199a12a8d0c0b63e5" name="xsl/transport.xsl" role="data" />
+   <file baseinstalldir="PWS" md5sum="a1ced2d204bd0bdddcc705a105862865" name="build.xml" role="data" />
    <file baseinstalldir="PWS" md5sum="54f8549a926dff926453d30893478ff5" name="FEATURES" role="data" />
-   <file baseinstalldir="PWS" md5sum="5122c80cec297532347aed34fcfa1f10" name="package-local.xml" role="data" />
+   <file baseinstalldir="PWS" md5sum="ae6508474af89768f9978bb93452f3b9" name="package-local.xml" role="data" />
    <file baseinstalldir="" md5sum="c811ee62af9fdd61f2af9aa13077e612" name="xsd2php" role="script">
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
@@ -63,6 +68,12 @@ notes
    <pearinstaller>
     <min>1.4.0</min>
    </pearinstaller>
+   <package>
+    <name>phing</name>
+    <channel>pear.phing.info</channel>
+    <min>2.3.3</min>
+    <max>2.3.3</max>
+   </package>
   </required>
  </dependencies>
  <phprelease>
@@ -141,7 +152,22 @@ notes
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2009-10-11</date>
+   <date>2009-10-16</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.6</release>
+    <api>0.0.6</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-10-16</date>
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 notes

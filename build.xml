@@ -1,0 +1,6 @@
+<?xml version="1"?>
+<project name="pws" default="generate" basedir=".">
+    <target name="generate">
+        <echo>Generating...</echo>
+    </target>
+</project>
