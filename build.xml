@@ -6,6 +6,11 @@
             <fileset dir="@DATA-DIR@/PWS/skel">
                 <include name="**" />
             </fileset>
+            <filterchain>
+                <replacetokens>
+                    <token key="ALOHA" value="SHMALOHA"/>
+                </replacetokens>
+            </filterchain>
         </copy>
     </target>
 </project>
