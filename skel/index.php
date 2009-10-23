@@ -107,6 +107,7 @@ else
             $defs->appendChild($portType);
 
             $doc->appendChild($defs);
+
             echo $doc->saveXML();
         }
     }
