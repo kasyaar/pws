@@ -35,11 +35,14 @@ else
                 $requestElement->setAttributeNode(new DOMAttr('name', $method->name.'Request'));
                 $complexType = $doc->createElement('complexType');
                 $sequence = $doc->createElement('sequence');
-                foreach( $method->getAnnotation('Request')->value as $elementName => $elementType )
+                foreach( $method->getAnnotation('Request')->value as $elementName => $elementAttrs )
                 {
                     $element = $doc->createElement('element');
                     $element->setAttributeNode(new DOMAttr('name', $elementName));
-                    $element->setAttributeNode(new DOMAttr('type', $elementType));
+                    foreach($elementAttrs as $attrName => $attrVal)
+                    {
+                        $element->setAttributeNode(new DOMAttr($attrName, $attrVal));
+                    }
                     $sequence->appendChild($element);
                 }
                 
@@ -52,11 +55,14 @@ else
                 $responseElement->setAttributeNode(new DOMAttr('name', $method->name.'Response'));
                 $complexType = $doc->createElement('complexType');
                 $sequence = $doc->createElement('sequence');
-                foreach( $method->getAnnotation('Response')->value as $elementName => $elementType )
+                foreach( $method->getAnnotation('Response')->value as $elementName => $elementAttrs )
                 {
                     $element = $doc->createElement('element');
                     $element->setAttributeNode(new DOMAttr('name', $elementName));
-                    $element->setAttributeNode(new DOMAttr('type', $elementType));
+                    foreach($elementAttrs as $attrName => $attrVal)
+                    {
+                        $element->setAttributeNode(new DOMAttr($attrName, $attrVal));
+                    }
                     $sequence->appendChild($element);
                 }
                 
