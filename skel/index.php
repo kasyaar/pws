@@ -104,9 +104,7 @@ else
                 $message->appendChild($part);
                 $defs->appendChild($message);
             }
-
             $defs->appendChild($portType);
-
             $doc->appendChild($defs);
 
             echo $doc->saveXML();
