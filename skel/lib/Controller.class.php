@@ -4,12 +4,13 @@ include_once dirname(__FILE__).'/../../lib/annotations/Response.class.php';
 class Controller
 {
     /**
-     * @Request({username={type='string'}})
+     * @Request({user={type='User'}})
      * @Response({greeting={type='string'}})
      */
     public function Hello ($request)
     {
-        return 'hello, '.$request;
+        $response = new StdClass;
+        $response->greeting = 'hello, '.$request->user->name;
+        return $response;
     }
-
 }

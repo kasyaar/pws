@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://skel/schemas/basetypes"
+        xmlns:tns="http://skel/schemas/basetypes" elementFormDefault="qualified">
+
+        <complexType name="User">
+                <annotation>
+                        <documentation></documentation>
+                </annotation>
+                <attribute name="name" type="string" use="required" />
+                <attribute name="surname" type="string" use="optional" />
+        </complexType> 
+</schema>
