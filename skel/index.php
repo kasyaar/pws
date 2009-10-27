@@ -25,9 +25,9 @@ else
             header('Content-Type: xsd'); 
             $doc = new DOMDocument('1.0', 'utf-8');
             $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'schema');
-            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/xmlapi7')); 
+            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api')); 
             $schema->setAttributeNode(new DOMAttr('elementFormDefault', 'qualified')); 
-            $schema->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/xmlapi7')); 
+            $schema->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/api')); 
             $schema->setAttributeNode(new DOMAttr('xmlns:base', 'http://skel/schemas/basetypes')); 
 
             $import = $doc->createElement('import');
@@ -95,11 +95,11 @@ else
             header('Content-Type: wsdl'); 
             $doc = new DOMDocument('1.0', 'utf-8');
             $defs = $doc->createElementNS('http://schemas.xmlsoap.org/wsdl/', 'wsdl:definitions');
-            $defs->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/xmlapi7'));
-            $defs->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/xmlapi7'));
+            $defs->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/api'));
+            $defs->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api'));
             $types = $doc->createElement('wsdl:types');
             $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
-            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/xmlapi7')); 
+            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api')); 
             $include = $doc->createElement('xsd:include');
             $include->setAttributeNode(new DOMAttr('schemaLocation', 'http://pws.local.net/?api'));
             $schema->appendChild($include);
@@ -150,7 +150,7 @@ else
                 $operation = $doc->createElement('wsdl:operation');
                 $operation->setAttributeNode(new DOMAttr('name', $method->name));
                 $soapoperation =$doc->createElement('soap:operation'); 
-                $soapoperation->setAttributeNode(new DOMAttr('soapAction','http://skel/schemas/xmlapi7/'.$method->name));
+                $soapoperation->setAttributeNode(new DOMAttr('soapAction','http://skel/schemas/api/'.$method->name));
                 $operation->appendChild($soapoperation);
                 $input = $doc->createElement('wsdl:input');
                 $output =$doc->createElement('wsdl:output');
