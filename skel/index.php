@@ -19,41 +19,47 @@ else
     {
         echo 'Wrong request!!!';
     }else{
-
-        if ( isset($_GET['api'] ))
-        {    
-            header('Content-Type: xsd'); 
+        if( isset($_GET['wsdl']))
+        {
+            header('Content-Type: wsdl'); 
             $doc = new DOMDocument('1.0', 'utf-8');
-            $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'schema');
+            $defs = $doc->createElementNS('http://schemas.xmlsoap.org/wsdl/', 'wsdl:definitions');
+            $defs->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/api'));
+            $defs->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api'));
+            $types = $doc->createElement('wsdl:types');
+            $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
+            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api')); 
             $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api')); 
             $schema->setAttributeNode(new DOMAttr('elementFormDefault', 'qualified')); 
             $schema->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/api')); 
             $schema->setAttributeNode(new DOMAttr('xmlns:base', 'http://skel/schemas/basetypes')); 
 
-            $import = $doc->createElement('import');
+            $import = $doc->createElement('xsd:import');
             $import->setAttributeNode(new DOMAttr('namespace', 'http://skel/schemas/basetypes'));
             $import->setAttributeNode(new DOMAttr('schemaLocation', './basetypes.xsd'));
             $schema->appendChild($import);
 
-            $refl = new ReflectionAnnotatedClass('Controller'); 
 
+
+            $refl = new ReflectionAnnotatedClass('Controller'); 
             $methods = $refl->getMethods();
             foreach( $methods as $method )
             {
-                $requestElement = $doc->createElement('element');
+
+                $requestElement = $doc->createElement('xsd:element');
                 $requestElement->setAttributeNode(new DOMAttr('name', $method->name.'Request'));
-                $complexType = $doc->createElement('complexType');
-                $sequence = $doc->createElement('sequence');
+                $complexType = $doc->createElement('xsd:complexType');
+                $sequence = $doc->createElement('xsd:sequence');
                 foreach( $method->getAnnotation('Request')->value as $elementName => $elementAttrs )
                 {
-                    $element = $doc->createElement('element');
+                    $element = $doc->createElement('xsd:element');
                     $element->setAttributeNode(new DOMAttr('name', $elementName));
                     foreach($elementAttrs as $attrName => $attrVal)
                     {
                         if($attrName == 'type')
                         {
                             $attrVal = (strtoupper($attrVal[0]) == $attrVal[0]) ?
-                                'base:'.$attrVal : $attrVal;
+                                'base:'.$attrVal : 'xsd:'.$attrVal;
                         }
                         $element->setAttributeNode(new DOMAttr($attrName, $attrVal));
                     }
@@ -65,16 +71,21 @@ else
 
                 $schema->appendChild($requestElement);
                 
-                $responseElement = $doc->createElement('element');
+                $responseElement = $doc->createElement('xsd:element');
                 $responseElement->setAttributeNode(new DOMAttr('name', $method->name.'Response'));
-                $complexType = $doc->createElement('complexType');
-                $sequence = $doc->createElement('sequence');
+                $complexType = $doc->createElement('xsd:complexType');
+                $sequence = $doc->createElement('xsd:sequence');
                 foreach( $method->getAnnotation('Response')->value as $elementName => $elementAttrs )
                 {
-                    $element = $doc->createElement('element');
+                    $element = $doc->createElement('xsd:element');
                     $element->setAttributeNode(new DOMAttr('name', $elementName));
                     foreach($elementAttrs as $attrName => $attrVal)
                     {
+                        if($attrName == 'type')
+                        {
+                            $attrVal = (strtoupper($attrVal[0]) == $attrVal[0]) ?
+                                'base:'.$attrVal : 'xsd:'.$attrVal;
+                        }
                         $element->setAttributeNode(new DOMAttr($attrName, $attrVal));
                     }
                     $sequence->appendChild($element);
@@ -85,28 +96,9 @@ else
 
                 $schema->appendChild($responseElement);
             }
-            
 
-            $doc->appendChild($schema);
-            echo $doc->saveXML();
-        }
-        elseif( isset($_GET['wsdl']))
-        {
-            header('Content-Type: wsdl'); 
-            $doc = new DOMDocument('1.0', 'utf-8');
-            $defs = $doc->createElementNS('http://schemas.xmlsoap.org/wsdl/', 'wsdl:definitions');
-            $defs->setAttributeNode(new DOMAttr('xmlns:tns', 'http://skel/schemas/api'));
-            $defs->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api'));
-            $types = $doc->createElement('wsdl:types');
-            $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
-            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://skel/schemas/api')); 
-            $include = $doc->createElement('xsd:include');
-            $include->setAttributeNode(new DOMAttr('schemaLocation', 'http://pws.local.net/?api'));
-            $schema->appendChild($include);
             $types->appendChild($schema);
             $defs->appendChild($types); 
-            $refl = new ReflectionAnnotatedClass('Controller'); 
-            $methods = $refl->getMethods();
             $portType = $doc->createElement('wsdl:portType');
             $portType->setAttributeNode(new DOMAttr('name', 'skel'));
             $binding =  $doc->createElement('wsdl:binding');
