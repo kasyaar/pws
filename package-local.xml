@@ -11,10 +11,10 @@
   <active>yes</active>
  </lead>
  <date>2009-11-07</date>
- <time>15:04:38</time>
+ <time>16:35:54</time>
  <version>
-  <release>0.0.8</release>
-  <api>0.0.8</api>
+  <release>0.0.9</release>
+  <api>0.0.9</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -47,18 +47,18 @@ notes
    <file baseinstalldir="PWS" md5sum="b91959d76a20d5bc2fd216d6dee55dd9" name="lib/annotations/Request.class.php" role="php" />
    <file baseinstalldir="PWS" md5sum="3a4ca76e071f0df92713775fc223ba15" name="lib/annotations/Response.class.php" role="php" />
    <file baseinstalldir="PWS" md5sum="98a343b5d11a397af8aee8a430f817af" name="skel/basetypes.xsd" role="data" />
-   <file baseinstalldir="PWS" md5sum="285d8c0ecac3a4c155d52b8b15689072" name="skel/index.php" role="data" />
+   <file baseinstalldir="PWS" md5sum="46151a71e3cb2667bbed21f97d5923fc" name="skel/index.php" role="data" />
    <file baseinstalldir="PWS" md5sum="31999558f53bc3ee72cd262b76bee98b" name="skel/lib/Controller.class.php" role="data" />
    <file baseinstalldir="PWS" md5sum="ef7d54858d19d70222c2bb2e896fcc61" name="tests/PWS_FilesystemTest.class.php" role="test" />
    <file baseinstalldir="PWS" md5sum="7387f52b73cab04eaefe77faa7463f41" name="xsl/basetypes.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="f22c52bd9d99b5f62fb2965a50bd2d66" name="xsl/classmap.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="be36a00d9460bf8199a12a8d0c0b63e5" name="xsl/transport.xsl" role="data" />
-   <file baseinstalldir="PWS" md5sum="a7301a2f867527baf0d25aec045398ac" name="build.xml" role="php">
+   <file baseinstalldir="PWS" md5sum="130f2e0d0d1d382a29e2726d8c286136" name="build.xml" role="php">
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
    </file>
    <file baseinstalldir="PWS" md5sum="54f8549a926dff926453d30893478ff5" name="FEATURES" role="data" />
-   <file baseinstalldir="PWS" md5sum="7d5721c41ba1782ca6ee751e37396c63" name="package-local.xml" role="data" />
+   <file baseinstalldir="PWS" md5sum="e7a69d3d2715e8c79a56600ce3fac219" name="package-local.xml" role="data" />
    <file baseinstalldir="" md5sum="1dcf9f3028f273cb35a0f5ab9547c8be" name="pws" role="script">
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
@@ -67,11 +67,6 @@ notes
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
    </file>
-   <!--<file baseinstalldir="" md5sum="c811ee62af9fdd61f2af9aa13077e612" name="xsd2php" role="script">-->
-    <!--<tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />-->
-    <!--<tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />-->
-   <!--</file>-->
-   <!--<file baseinstalldir="" md5sum="7192c27d7a0003d089f521f14ba7c3ee" name="xsd2php.bat" role="script" />-->
   </dir>
  </contents>
  <dependencies>
@@ -92,8 +87,6 @@ notes
  </dependencies>
  <phprelease>
   <filelist>
-   <!--<install as="xsd2php.bat" name="xsd2php.bat" />-->
-   <!--<install as="xsd2php" name="xsd2php" />-->
    <install as="pws.bat" name="pws.bat" />
    <install as="pws" name="pws" />
   </filelist>
@@ -208,6 +201,21 @@ notes
    <version>
     <release>0.0.8</release>
     <api>0.0.8</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-11-07</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.9</release>
+    <api>0.0.9</api>
    </version>
    <stability>
     <release>alpha</release>

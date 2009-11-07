@@ -170,13 +170,12 @@ else
             $port->setAttributeNode(new DOMAttr('binding', 'tns:skelSOAP'));
             $port->setAttributeNode(new DOMAttr('name', 'skelSOAP'));
             $soapaddress = $doc->createElement('soap:address');
-            $soapaddress->setAttributeNode(new DOMAttr('location', 'http://pws.local.net/'));
+            list($path) = explode('?', $_SERVER['REQUEST_URI']);
+            $location = 'http://'.$_SERVER['SERVER_NAME'].$path;
+            $soapaddress->setAttributeNode(new DOMAttr('location', $location));
             $port->appendChild($soapaddress);
             $service->appendChild($port);
             $defs->appendChild($service);
-
-
-            
             $doc->appendChild($defs);
 
             echo $doc->saveXML();
