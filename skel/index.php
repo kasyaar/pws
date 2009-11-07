@@ -1,6 +1,7 @@
 <?php
 include_once 'lib/Controller.class.php';
-include_once dirname(__FILE__).'/../lib/addendum/annotations.php';
+//include_once dirname(__FILE__).'/../lib/addendum/annotations.php';
+include_once '@PWS-LIBS@/lib/addendum/annotations.php';
 
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' )

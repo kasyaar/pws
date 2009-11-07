@@ -1,6 +1,6 @@
 <?php
-include_once dirname(__FILE__).'/../../lib/annotations/Request.class.php';
-include_once dirname(__FILE__).'/../../lib/annotations/Response.class.php';
+include_once '@PWS-LIBS@/lib/annotations/Request.class.php';
+include_once '@PWS-LIBS@/lib/annotations/Response.class.php';
 class Controller
 {
     /**
