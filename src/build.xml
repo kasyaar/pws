@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="pws" default="generate" basedir=".">
+    <target name="generate">
+        <echo>Generating...</echo>
+        <mkdir dir="${currentdir}/${projectname}" />
+        <copy todir="${currentdir}/${projectname}">
+            <fileset dir="@DATA-DIR@/PWS/skel">
+                <include name="**" />
+            </fileset>
+            <filterchain>
+                <replacetokens>
+                    <token key="PWS-LIBS" value="@PEAR-DIR@/PWS"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+</project>
