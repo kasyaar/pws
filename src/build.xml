@@ -10,6 +10,7 @@
             <filterchain>
                 <replacetokens>
                     <token key="PWS-LIBS" value="@PEAR-DIR@/PWS"/>
+                    <token key="PROJECTNAME" value="${projectname}"/>
                 </replacetokens>
             </filterchain>
         </copy>
