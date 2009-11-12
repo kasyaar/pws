@@ -1,17 +1,12 @@
 <?xml version="1.0"?>
-<project name="pws" default="generate" basedir=".">
-    <target name="generate">
+<project name="pws" default="prepare" basedir=".">
+    <property file="./build.properties"/>
+    <target name="prepare">
         <echo>Generating...</echo>
-        <mkdir dir="${currentdir}/${projectname}" />
-        <copy todir="${currentdir}/${projectname}">
-            <fileset dir="@DATA-DIR@/PWS/skel">
-                <include name="**" />
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="PWS-LIBS" value="@PEAR-DIR@/PWS"/>
-                </replacetokens>
-            </filterchain>
-        </copy>
+        <exec command="pear package ${src.dir}/package-local.xml > /tmp/result" />
+        <exec command="sudo pear uninstall __uri/PWS" checkReturn="true"/>
+        <exec command="sudo pear install PWS-${pkg.version}.tgz" checkReturn="true"/>
+        <delete dir="../test_pws"/>
+        <exec command="pws test_pws" dir=".." checkReturn="true"/>
     </target>
 </project>
