@@ -2,6 +2,12 @@
 <project name="pws" default="usepws" basedir=".">
     <property file="./build.properties"/>
     <target name="build">
+        <if>
+            <isset property="tty"/>
+            <then>
+                <phingcall target="pfm"/>
+            </then>
+        </if>
         <exec command="pear package ${src.dir}/package-local.xml > /tmp/result" />
     </target>
     <target name="uninstall" depends="build">
@@ -13,5 +19,8 @@
     <target name="usepws" depends="install">
         <delete dir="../test_pws"/>
         <exec command="pws test_pws" dir=".." checkReturn="true"/>
+    </target>
+    <target name="pfm">
+        <exec command="pfm > ${tty}" dir="${src.dir}"/>
     </target>
 </project>
