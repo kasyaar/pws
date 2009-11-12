@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
-<project name="pws" default="prepare" basedir=".">
+<project name="pws" default="usepws" basedir=".">
     <property file="./build.properties"/>
-    <target name="prepare">
-        <echo>Generating...</echo>
+    <target name="build">
         <exec command="pear package ${src.dir}/package-local.xml > /tmp/result" />
+    </target>
+    <target name="uninstall" depends="build">
         <exec command="sudo pear uninstall __uri/PWS" checkReturn="true"/>
+    </target>
+    <target name="install" depends="uninstall">
         <exec command="sudo pear install PWS-${pkg.version}.tgz" checkReturn="true"/>
+    </target>
+    <target name="usepws" depends="install">
         <delete dir="../test_pws"/>
         <exec command="pws test_pws" dir=".." checkReturn="true"/>
     </target>
