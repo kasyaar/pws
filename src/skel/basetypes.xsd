@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://skel/schemas/basetypes"
-        xmlns:tns="http://skel/schemas/basetypes" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://@PROJECTNAME@/schemas/basetypes"
+        xmlns:tns="http://@PROJECTNAME@/schemas/basetypes" elementFormDefault="qualified">
 
         <complexType name="User">
                 <annotation>
