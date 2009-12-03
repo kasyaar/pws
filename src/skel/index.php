@@ -2,7 +2,62 @@
 include_once 'lib/Controller.class.php';
 //include_once dirname(__FILE__).'/../lib/addendum/annotations.php';
 include_once '@PWS-LIBS@/lib/addendum/annotations.php';
+class WSDLDocument extends DOMDocument{
+    private
+        $annotatedController,
+        $definitions,
+        $schema;
+    function __construct(ReflectionAnnotatedClass $annotatedController)
+    {
+        parent::__construct('1.0', 'utf-8');
+        $this->annotatedController = $annotatedController;
+    }
+    public function generate ()
+    {
+        
+    }
+    public function generateTypes ()
+    {
+        
+    }
+    private function _generateRElement ($method, $type = 'Request')
+    {
+        $rElement = $this->createElement('xsd:element');
+        $rElement->setAttribute('name', $method->name.$type);
+        $complexType = $this->createElement('xsd:complexType');
+        $sequence = $this->createElement('xsd:sequence');
+        foreach( $method->getAnnotation($type)->value as $elementName => $elementAttrs )
+        {
+            $element = $this->createElement('xsd:element');
+            $element->setAttribute('name', $elementName);
+            $this->_setAttributes($element, $elementAttrs);
+            $sequence->appendChild($element);
+        }
+        $complexType->appendChild($sequence);
+        $rElement->appendChild($complexType);
+        return $rElement; 
+    }
+    
+    public function generateMethod (ReflectionAnnotatedMethod $method, $schema)
+    {
+        $schema->appendChild($this->_generateRElement($method, 'Request'));
+        $schema->appendChild($this->_generateRElement($method, 'Response'));
+    }
+    private function _setAttributes (&$element, $attrs)
+    {
+        foreach($attrs as $attrName => $attrVal)
+        {
+            if($attrName == 'type')
+            {
+                $attrVal = (strtoupper($attrVal[0]) == $attrVal[0]) ?
+                    'base:'.$attrVal : 'xsd:'.$attrVal;
+            }
+            $element->setAttribute($attrName, $attrVal);
+        }
 
+    }
+    
+}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
@@ -18,137 +73,88 @@ else
 {
     if((isset($_GET['api']) && isset($_GET['wsdl'])) || empty($_GET))
     {
-        echo 'Wrong request!!!';
     }else{
         if( isset($_GET['wsdl']))
         {
             header('Content-Type: wsdl'); 
-            $doc = new DOMDocument('1.0', 'utf-8');
+            $annotatedController = new ReflectionAnnotatedClass('Controller'); 
+            $methods = $annotatedController->getMethods();
+            $doc = new WSDLDocument($annotatedController);
             $defs = $doc->createElementNS('http://schemas.xmlsoap.org/wsdl/', 'wsdl:definitions');
-            $defs->setAttributeNode(new DOMAttr('xmlns:tns', 'http://@PROJECTNAME@/schemas/api'));
-            $defs->setAttributeNode(new DOMAttr('targetNamespace', 'http://@PROJECTNAME@/schemas/api'));
-            $types = $doc->createElement('wsdl:types');
+            $defs->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api');
+            $defs->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api');
             $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
-            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://@PROJECTNAME@/schemas/api')); 
-            $schema->setAttributeNode(new DOMAttr('targetNamespace', 'http://@PROJECTNAME@/schemas/api')); 
-            $schema->setAttributeNode(new DOMAttr('elementFormDefault', 'qualified')); 
-            $schema->setAttributeNode(new DOMAttr('xmlns:tns', 'http://@PROJECTNAME@/schemas/api')); 
-            $schema->setAttributeNode(new DOMAttr('xmlns:base', 'http://@PROJECTNAME@/schemas/basetypes')); 
+            $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
+            $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
+            $schema->setAttribute('elementFormDefault', 'qualified'); 
+            $schema->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api'); 
+            $schema->setAttribute('xmlns:base', 'http://@PROJECTNAME@/schemas/basetypes'); 
 
             $import = $doc->createElement('xsd:import');
-            $import->setAttributeNode(new DOMAttr('namespace', 'http://@PROJECTNAME@/schemas/basetypes'));
-            $import->setAttributeNode(new DOMAttr('schemaLocation', './basetypes.xsd'));
+            $import->setAttribute('namespace', 'http://@PROJECTNAME@/schemas/basetypes');
+            $import->setAttribute('schemaLocation', './basetypes.xsd');
             $schema->appendChild($import);
 
 
 
-            $refl = new ReflectionAnnotatedClass('Controller'); 
-            $methods = $refl->getMethods();
             foreach( $methods as $method )
             {
-
-                $requestElement = $doc->createElement('xsd:element');
-                $requestElement->setAttributeNode(new DOMAttr('name', $method->name.'Request'));
-                $complexType = $doc->createElement('xsd:complexType');
-                $sequence = $doc->createElement('xsd:sequence');
-                foreach( $method->getAnnotation('Request')->value as $elementName => $elementAttrs )
-                {
-                    $element = $doc->createElement('xsd:element');
-                    $element->setAttributeNode(new DOMAttr('name', $elementName));
-                    foreach($elementAttrs as $attrName => $attrVal)
-                    {
-                        if($attrName == 'type')
-                        {
-                            $attrVal = (strtoupper($attrVal[0]) == $attrVal[0]) ?
-                                'base:'.$attrVal : 'xsd:'.$attrVal;
-                        }
-                        $element->setAttributeNode(new DOMAttr($attrName, $attrVal));
-                    }
-                    $sequence->appendChild($element);
-                }
-                
-                $complexType->appendChild($sequence);
-                $requestElement->appendChild($complexType);
-
-                $schema->appendChild($requestElement);
-                
-                $responseElement = $doc->createElement('xsd:element');
-                $responseElement->setAttributeNode(new DOMAttr('name', $method->name.'Response'));
-                $complexType = $doc->createElement('xsd:complexType');
-                $sequence = $doc->createElement('xsd:sequence');
-                foreach( $method->getAnnotation('Response')->value as $elementName => $elementAttrs )
-                {
-                    $element = $doc->createElement('xsd:element');
-                    $element->setAttributeNode(new DOMAttr('name', $elementName));
-                    foreach($elementAttrs as $attrName => $attrVal)
-                    {
-                        if($attrName == 'type')
-                        {
-                            $attrVal = (strtoupper($attrVal[0]) == $attrVal[0]) ?
-                                'base:'.$attrVal : 'xsd:'.$attrVal;
-                        }
-                        $element->setAttributeNode(new DOMAttr($attrName, $attrVal));
-                    }
-                    $sequence->appendChild($element);
-                }
-                
-                $complexType->appendChild($sequence);
-                $responseElement->appendChild($complexType);
-
-                $schema->appendChild($responseElement);
+                $doc->generateMethod($method, $schema);
             }
 
+
+            $types = $doc->createElement('wsdl:types');
             $types->appendChild($schema);
             $defs->appendChild($types); 
             $portType = $doc->createElement('wsdl:portType');
-            $portType->setAttributeNode(new DOMAttr('name', '@PROJECTNAME@'));
+            $portType->setAttribute('name', '@PROJECTNAME@');
             $binding =  $doc->createElement('wsdl:binding');
-            $binding->setAttributeNode(new DOMAttr('name', 'skelSOAP'));
-            $binding->setAttributeNode(new DOMAttr('type', 'tns:@PROJECTNAME@'));
+            $binding->setAttribute('name', 'skelSOAP');
+            $binding->setAttribute('type', 'tns:@PROJECTNAME@');
             $soapbinding = $doc->createElementNS('http://schemas.xmlsoap.org/wsdl/soap/', 'soap:binding'); 
-            $soapbinding->setAttributeNode(new DOMAttr('style', 'document'));
-            $soapbinding->setAttributeNode(new DOMAttr('transport', 'http://schemas.xmlsoap.org/soap/http'));
+            $soapbinding->setAttribute('style', 'document');
+            $soapbinding->setAttribute('transport', 'http://schemas.xmlsoap.org/soap/http');
             $binding->appendChild($soapbinding);
             foreach($methods as $method)
             {
 
                 $message = $doc->createElement('wsdl:message');
-                $message->setAttributeNode(new DOMAttr('name', $method->name.'Input'));
+                $message->setAttribute('name', $method->name.'Input');
                 $part = $doc->createElement('wsdl:part');
-                $part->setAttributeNode(new DOMAttr('element', 'tns:'.$method->name.'Request'));
-                $part->setAttributeNode(new DOMAttr('name', strtolower($method->name)));
+                $part->setAttribute('element', 'tns:'.$method->name.'Request');
+                $part->setAttribute('name', strtolower($method->name));
                 $message->appendChild($part);
                 $defs->appendChild($message);
 
 
                 $message = $doc->createElement('wsdl:message');
-                $message->setAttributeNode(new DOMAttr('name', $method->name.'Output'));
+                $message->setAttribute('name', $method->name.'Output');
                 $part = $doc->createElement('wsdl:part');
-                $part->setAttributeNode(new DOMAttr('element', 'tns:'.$method->name.'Response'));
-                $part->setAttributeNode(new DOMAttr('name', strtolower($method->name)));
+                $part->setAttribute('element', 'tns:'.$method->name.'Response');
+                $part->setAttribute('name', strtolower($method->name));
                 $message->appendChild($part);
                 $defs->appendChild($message);
 
                 $operation  = $doc->createElement('wsdl:operation');
-                $operation->setAttributeNode(new DOMAttr('name', $method->name)); 
+                $operation->setAttribute('name', $method->name); 
                 $input = $doc->createElement('wsdl:input');
-                $input->setAttributeNode(new DOMAttr('message','tns:'.$method->name.'Input'));
+                $input->setAttribute('message','tns:'.$method->name.'Input');
                 $output =$doc->createElement('wsdl:output');
-                $output->setAttributeNode(new DOMAttr('message','tns:'.$method->name.'Output'));
+                $output->setAttribute('message','tns:'.$method->name.'Output');
                 $operation->appendChild($input);
                 $operation->appendChild($output);
                 $portType->appendChild($operation);
 
 
                 $operation = $doc->createElement('wsdl:operation');
-                $operation->setAttributeNode(new DOMAttr('name', $method->name));
+                $operation->setAttribute('name', $method->name);
                 $soapoperation =$doc->createElement('soap:operation'); 
-                $soapoperation->setAttributeNode(new DOMAttr('soapAction','http://@PROJECTNAME@/schemas/api/'.$method->name));
+                $soapoperation->setAttribute('soapAction','http://@PROJECTNAME@/schemas/api/'.$method->name);
                 $operation->appendChild($soapoperation);
                 $input = $doc->createElement('wsdl:input');
                 $output =$doc->createElement('wsdl:output');
                 $soapbody = $doc->createElement('soap:body');
-                $soapbody->setAttributeNode(new DOMAttr('use','literal'));
+                $soapbody->setAttribute('use','literal');
                 $input->appendChild($soapbody);
                 $output->appendChild(clone $soapbody);
                 $operation->appendChild($input);
@@ -164,15 +170,15 @@ else
             $defs->appendChild($binding);
 
             $service = $doc->createElement('wsdl:service');
-            $service->setAttributeNode(new DOMAttr('name', '@PROJECTNAME@'));
+            $service->setAttribute('name', '@PROJECTNAME@');
             $port =  $doc->createElement('wsdl:port');
 
-            $port->setAttributeNode(new DOMAttr('binding', 'tns:skelSOAP'));
-            $port->setAttributeNode(new DOMAttr('name', 'skelSOAP'));
+            $port->setAttribute('binding', 'tns:skelSOAP');
+            $port->setAttribute('name', 'skelSOAP');
             $soapaddress = $doc->createElement('soap:address');
             list($path) = explode('?', $_SERVER['REQUEST_URI']);
             $location = 'http://'.$_SERVER['SERVER_NAME'].$path;
-            $soapaddress->setAttributeNode(new DOMAttr('location', $location));
+            $soapaddress->setAttribute('location', $location);
             $port->appendChild($soapaddress);
             $service->appendChild($port);
             $defs->appendChild($service);
