@@ -6,7 +6,8 @@ class WSDLDocument extends DOMDocument{
     private
         $annotatedController,
         $definitions,
-        $schema;
+        $schema,
+        $currentMethod;
     function __construct(ReflectionAnnotatedClass $annotatedController)
     {
         parent::__construct('1.0', 'utf-8');
@@ -16,17 +17,24 @@ class WSDLDocument extends DOMDocument{
     {
         
     }
-    public function generateTypes ()
+    public function generateTypes ($schema)
     {
-        
+        $methods = $this->annotatedController->getMethods();
+        foreach( $methods as $method )
+        { 
+            $this->currentMethod = $method;
+            $schema->appendChild($this->_generateRElement('Request'));
+            $schema->appendChild($this->_generateRElement('Response'));
+        }
+
     }
-    private function _generateRElement ($method, $type = 'Request')
+    private function _generateRElement ($type = 'Request')
     {
         $rElement = $this->createElement('xsd:element');
-        $rElement->setAttribute('name', $method->name.$type);
+        $rElement->setAttribute('name', $this->currentMethod->name.$type);
         $complexType = $this->createElement('xsd:complexType');
         $sequence = $this->createElement('xsd:sequence');
-        foreach( $method->getAnnotation($type)->value as $elementName => $elementAttrs )
+        foreach( $this->currentMethod->getAnnotation($type)->value as $elementName => $elementAttrs )
         {
             $element = $this->createElement('xsd:element');
             $element->setAttribute('name', $elementName);
@@ -38,11 +46,6 @@ class WSDLDocument extends DOMDocument{
         return $rElement; 
     }
     
-    public function generateMethod (ReflectionAnnotatedMethod $method, $schema)
-    {
-        $schema->appendChild($this->_generateRElement($method, 'Request'));
-        $schema->appendChild($this->_generateRElement($method, 'Response'));
-    }
     private function _setAttributes (&$element, $attrs)
     {
         foreach($attrs as $attrName => $attrVal)
@@ -97,10 +100,7 @@ else
 
 
 
-            foreach( $methods as $method )
-            {
-                $doc->generateMethod($method, $schema);
-            }
+            $doc->generateTypes($schema);
 
 
             $types = $doc->createElement('wsdl:types');
