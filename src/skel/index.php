@@ -18,11 +18,7 @@ class WSDLDocument extends DOMDocument{
         parent::__construct('1.0', 'utf-8');
         $this->annotatedController = $annotatedController;
     }
-    public function generate ()
-    {
-        
-    }
-    public function generateTypes ($defs)
+    public function generate ($defs)
     {
         $schema = $this->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
         $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
@@ -95,7 +91,8 @@ class WSDLDocument extends DOMDocument{
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
-    $server = new SoapServer('http://pws.local.net/?wsdl');
+    list($path) = explode('?', $_SERVER['REQUEST_URI']);
+    $server = new SoapServer('http://'.$_SERVER['SERVER_NAME'].$path.'/?wsdl');
     $server->setClass('Controller');
     ob_start();
     $server->handle();
@@ -118,7 +115,7 @@ else
             $defs->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api');
             $defs->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api');
 
-            $doc->generateTypes($defs);
+            $doc->generate($defs);
 
 
             $portType = $doc->createElement('wsdl:portType');
