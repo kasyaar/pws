@@ -7,7 +7,12 @@ class WSDLDocument extends DOMDocument{
         $annotatedController,
         $definitions,
         $schema,
-        $currentMethod;
+        $currentMethod,
+        $namePostfixes = array(
+            'Request' => 'Input',
+            'Response' => 'Output'
+        )
+        ;
     function __construct(ReflectionAnnotatedClass $annotatedController)
     {
         parent::__construct('1.0', 'utf-8');
@@ -36,12 +41,25 @@ class WSDLDocument extends DOMDocument{
             $this->currentMethod = $method;
             $schema->appendChild($this->_generateRElement('Request'));
             $schema->appendChild($this->_generateRElement('Response'));
+            $defs->appendChild($this->_generateWSDLMessage('Request'));
+            $defs->appendChild($this->_generateWSDLMessage('Response'));
         }
         $types = $this->createElement('wsdl:types');
         $types->appendChild($schema);
         $defs->appendChild($types); 
 
     }
+    private function _generateWSDLMessage ($type = 'Request')
+    {
+                $message = $this->createElement('wsdl:message');
+                $message->setAttribute('name', $this->currentMethod->name.$this->namePostfixes[$type]);
+                $part = $this->createElement('wsdl:part');
+                $part->setAttribute('element', 'tns:'.$this->currentMethod->name.$type);
+                $part->setAttribute('name', strtolower($this->currentMethod->name));
+                $message->appendChild($part);
+                return $message;
+    }
+    
     private function _generateRElement ($type = 'Request')
     {
         $rElement = $this->createElement('xsd:element');
@@ -115,29 +133,16 @@ else
             foreach($methods as $method)
             {
 
-                $message = $doc->createElement('wsdl:message');
-                $message->setAttribute('name', $method->name.'Input');
-                $part = $doc->createElement('wsdl:part');
-                $part->setAttribute('element', 'tns:'.$method->name.'Request');
-                $part->setAttribute('name', strtolower($method->name));
-                $message->appendChild($part);
-                $defs->appendChild($message);
-
-
-                $message = $doc->createElement('wsdl:message');
-                $message->setAttribute('name', $method->name.'Output');
-                $part = $doc->createElement('wsdl:part');
-                $part->setAttribute('element', 'tns:'.$method->name.'Response');
-                $part->setAttribute('name', strtolower($method->name));
-                $message->appendChild($part);
-                $defs->appendChild($message);
 
                 $operation  = $doc->createElement('wsdl:operation');
                 $operation->setAttribute('name', $method->name); 
+
                 $input = $doc->createElement('wsdl:input');
                 $input->setAttribute('message','tns:'.$method->name.'Input');
+
                 $output =$doc->createElement('wsdl:output');
                 $output->setAttribute('message','tns:'.$method->name.'Output');
+
                 $operation->appendChild($input);
                 $operation->appendChild($output);
                 $portType->appendChild($operation);
