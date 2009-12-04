@@ -17,34 +17,66 @@ class WSDLDocument extends DOMDocument{
     {
         parent::__construct('1.0', 'utf-8');
         $this->annotatedController = $annotatedController;
+        $this->_createSchema();
+        $this->_createPortType();
     }
     public function generate ($defs)
     {
-        $schema = $this->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
-        $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
-        $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
-        $schema->setAttribute('elementFormDefault', 'qualified'); 
-        $schema->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api'); 
-        $schema->setAttribute('xmlns:base', 'http://@PROJECTNAME@/schemas/basetypes'); 
-
-        $import = $this->createElement('xsd:import');
-        $import->setAttribute('namespace', 'http://@PROJECTNAME@/schemas/basetypes');
-        $import->setAttribute('schemaLocation', './basetypes.xsd');
-        $schema->appendChild($import);
         $methods = $this->annotatedController->getMethods();
         foreach( $methods as $method )
         { 
             $this->currentMethod = $method;
-            $schema->appendChild($this->_generateRElement('Request'));
-            $schema->appendChild($this->_generateRElement('Response'));
+            $this->schema->appendChild($this->_generateRElement('Request'));
+            $this->schema->appendChild($this->_generateRElement('Response'));
             $defs->appendChild($this->_generateWSDLMessage('Request'));
             $defs->appendChild($this->_generateWSDLMessage('Response'));
+            $this->portType->appendChild($this->_generateOperation());
         }
         $types = $this->createElement('wsdl:types');
-        $types->appendChild($schema);
+        $types->appendChild($this->schema);
         $defs->appendChild($types); 
+        $defs->appendChild($this->portType);
 
     }
+    private function _generateOperation ()
+    {
+        $operation  = $this->createElement('wsdl:operation');
+        $operation->setAttribute('name', $method->name); 
+        $operation->appendChild($this->_generateOperationPart('Request'));
+        $operation->appendChild($this->_generateOperationPart('Response'));
+        return $operation;
+
+    }
+    private function _generateOperationPart ($type = 'Request')
+    {
+        $opPart = $this->createElement('wsdl:'.strtolower($this->namePostfixes[$type]));
+        $opPart->setAttribute('message','tns:'.$this->currentMethod->name.$this->namePostfixes[$type]);
+        return $opPart;
+    }
+    
+
+    private function _createSchema ()
+    {
+        $this->schema = $this->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
+        $this->schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
+        $this->schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
+        $this->schema->setAttribute('elementFormDefault', 'qualified'); 
+        $this->schema->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api'); 
+        $this->schema->setAttribute('xmlns:base', 'http://@PROJECTNAME@/schemas/basetypes'); 
+
+        $import = $this->createElement('xsd:import');
+        $import->setAttribute('namespace', 'http://@PROJECTNAME@/schemas/basetypes');
+        $import->setAttribute('schemaLocation', './basetypes.xsd');
+        $this->schema->appendChild($import);
+
+    }
+
+    private function _createPortType ()
+    {
+        $this->portType = $this->createElement('wsdl:portType');
+        $this->portType->setAttribute('name', '@PROJECTNAME@');
+    }
+    
     private function _generateWSDLMessage ($type = 'Request')
     {
                 $message = $this->createElement('wsdl:message');
@@ -129,22 +161,6 @@ else
             $binding->appendChild($soapbinding);
             foreach($methods as $method)
             {
-
-
-                $operation  = $doc->createElement('wsdl:operation');
-                $operation->setAttribute('name', $method->name); 
-
-                $input = $doc->createElement('wsdl:input');
-                $input->setAttribute('message','tns:'.$method->name.'Input');
-
-                $output =$doc->createElement('wsdl:output');
-                $output->setAttribute('message','tns:'.$method->name.'Output');
-
-                $operation->appendChild($input);
-                $operation->appendChild($output);
-                $portType->appendChild($operation);
-
-
                 $operation = $doc->createElement('wsdl:operation');
                 $operation->setAttribute('name', $method->name);
                 $soapoperation =$doc->createElement('soap:operation'); 
@@ -158,14 +174,10 @@ else
                 $output->appendChild(clone $soapbody);
                 $operation->appendChild($input);
                 $operation->appendChild($output);
-
-
-                
                 $binding->appendChild($operation);
 
 
             }
-            $defs->appendChild($portType);
             $defs->appendChild($binding);
 
             $service = $doc->createElement('wsdl:service');
