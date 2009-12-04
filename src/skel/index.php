@@ -8,6 +8,7 @@ class WSDLDocument extends DOMDocument{
         $definitions,
         $schema,
         $types,
+        $service,
         $currentMethod,
         $namePostfixes = array(
             'Request' => 'Input',
@@ -19,8 +20,26 @@ class WSDLDocument extends DOMDocument{
         parent::__construct('1.0', 'utf-8');
         $this->annotatedController = $annotatedController;
         $this->_createTypesSection();
-        $this->_createPortType();
+        $this->_createPortTypeSection();
+        $this->_createServiceSection();
     }
+    private function _createServiceSection ()
+    {
+        $this->service = $this->createElement('wsdl:service');
+        $this->service->setAttribute('name', '@PROJECTNAME@');
+        $port =  $this->createElement('wsdl:port');
+
+        $port->setAttribute('binding', 'tns:skelSOAP');
+        $port->setAttribute('name', 'skelSOAP');
+        $soapaddress = $this->createElement('soap:address');
+        list($path) = explode('?', $_SERVER['REQUEST_URI']);
+        $location = 'http://'.$_SERVER['SERVER_NAME'].$path;
+        $soapaddress->setAttribute('location', $location);
+        $port->appendChild($soapaddress);
+        $this->service->appendChild($port);
+
+    }
+    
     public function generate ($defs)
     {
         $methods = $this->annotatedController->getMethods();
@@ -35,6 +54,7 @@ class WSDLDocument extends DOMDocument{
         }
         $defs->appendChild($this->types); 
         $defs->appendChild($this->portType);
+        $defs->appendChild($this->service);
 
     }
     private function _generateOperation ()
@@ -73,7 +93,7 @@ class WSDLDocument extends DOMDocument{
     }
 
 
-    private function _createPortType ()
+    private function _createPortTypeSection()
     {
         $this->portType = $this->createElement('wsdl:portType');
         $this->portType->setAttribute('name', '@PROJECTNAME@');
@@ -179,19 +199,6 @@ else
             }
             $defs->appendChild($binding);
 
-            $service = $doc->createElement('wsdl:service');
-            $service->setAttribute('name', '@PROJECTNAME@');
-            $port =  $doc->createElement('wsdl:port');
-
-            $port->setAttribute('binding', 'tns:skelSOAP');
-            $port->setAttribute('name', 'skelSOAP');
-            $soapaddress = $doc->createElement('soap:address');
-            list($path) = explode('?', $_SERVER['REQUEST_URI']);
-            $location = 'http://'.$_SERVER['SERVER_NAME'].$path;
-            $soapaddress->setAttribute('location', $location);
-            $port->appendChild($soapaddress);
-            $service->appendChild($port);
-            $defs->appendChild($service);
             $doc->appendChild($defs);
 
             echo $doc->saveXML();
