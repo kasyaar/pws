@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.8.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
  <name>PWS</name>
  <uri>http://pear.bgnev.com</uri>
  <summary>summary</summary>
@@ -10,11 +10,11 @@
   <email>kasyaar@beginevolution.com</email>
   <active>yes</active>
  </lead>
- <date>2009-11-11</date>
- <time>18:37:30</time>
+ <date>2009-12-04</date>
+ <time>19:43:53</time>
  <version>
-  <release>0.0.9</release>
-  <api>0.0.9</api>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -34,6 +34,7 @@ notes
    <file baseinstalldir="PWS" md5sum="d2b57782cda097b36569bca3f41b954a" name="generator/PWS_XSDGenerator.class.php" role="php" />
    <file baseinstalldir="PWS" md5sum="7ec40a2bd3570686a09e15d11cdf80a8" name="lib/hbx_manager.php" role="php" />
    <file baseinstalldir="PWS" md5sum="016ac7b2b2f16e4c0a877815c9590a65" name="lib/PWS_Filesystem.class.php" role="php" />
+   <file baseinstalldir="PWS" md5sum="639320d26fd40ba1f67245b82fd68b83" name="lib/WSDLDocument.class.php" role="php" />
    <file baseinstalldir="PWS" md5sum="b4e9d590280d5ac57c2d7abbfc5de8ba" name="lib/addendum/annotations.php" role="php" />
    <file baseinstalldir="PWS" md5sum="9d1439e76e652f8276f8555bae39b55d" name="lib/addendum/LICENSE" role="data" />
    <file baseinstalldir="PWS" md5sum="1f065f668e1218794e38f09ca3f60d61" name="lib/addendum/annotations/annotation_parser.php" role="php" />
@@ -46,17 +47,17 @@ notes
    <file baseinstalldir="PWS" md5sum="8a7f254bc34ef875e4470313367a9c4a" name="lib/addendum/annotations/tests/doc_comment_test.php" role="php" />
    <file baseinstalldir="PWS" md5sum="b91959d76a20d5bc2fd216d6dee55dd9" name="lib/annotations/Request.class.php" role="php" />
    <file baseinstalldir="PWS" md5sum="3a4ca76e071f0df92713775fc223ba15" name="lib/annotations/Response.class.php" role="php" />
-   <file baseinstalldir="PWS" md5sum="98a343b5d11a397af8aee8a430f817af" name="skel/basetypes.xsd" role="data" />
-   <file baseinstalldir="PWS" md5sum="46151a71e3cb2667bbed21f97d5923fc" name="skel/index.php" role="data" />
+   <file baseinstalldir="PWS" md5sum="ca56958312f3181f0d450f86fc9743aa" name="skel/basetypes.xsd" role="data" />
+   <file baseinstalldir="PWS" md5sum="afdd42e8952b4d40d3b0f27483504cad" name="skel/index.php" role="data" />
    <file baseinstalldir="PWS" md5sum="31999558f53bc3ee72cd262b76bee98b" name="skel/lib/Controller.class.php" role="data" />
    <file baseinstalldir="PWS" md5sum="7387f52b73cab04eaefe77faa7463f41" name="xsl/basetypes.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="f22c52bd9d99b5f62fb2965a50bd2d66" name="xsl/classmap.xsl" role="data" />
    <file baseinstalldir="PWS" md5sum="be36a00d9460bf8199a12a8d0c0b63e5" name="xsl/transport.xsl" role="data" />
-   <file baseinstalldir="PWS" md5sum="130f2e0d0d1d382a29e2726d8c286136" name="build.xml" role="php">
+   <file baseinstalldir="PWS" md5sum="2abf3c9a42f739ec306136709f5e6dd6" name="build.xml" role="php">
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="PWS" md5sum="469f10b38e047c9c18d46e6bd5d9069f" name="package-local.xml" role="data" />
+   <file baseinstalldir="PWS" md5sum="c2722167daf0909a2529b2728943fcd6" name="package-local.xml" role="data" />
    <file baseinstalldir="" md5sum="1dcf9f3028f273cb35a0f5ab9547c8be" name="pws" role="script">
     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
     <tasks:replace from="@PEAR-DIR@" to="php_dir" type="pear-config" />
@@ -219,7 +220,22 @@ notes
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2009-11-11</date>
+   <date>2009-12-04</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+notes
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-12-04</date>
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 notes
