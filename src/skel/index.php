@@ -17,8 +17,19 @@ class WSDLDocument extends DOMDocument{
     {
         
     }
-    public function generateTypes ($schema)
+    public function generateTypes ($defs)
     {
+        $schema = $this->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
+        $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
+        $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
+        $schema->setAttribute('elementFormDefault', 'qualified'); 
+        $schema->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api'); 
+        $schema->setAttribute('xmlns:base', 'http://@PROJECTNAME@/schemas/basetypes'); 
+
+        $import = $this->createElement('xsd:import');
+        $import->setAttribute('namespace', 'http://@PROJECTNAME@/schemas/basetypes');
+        $import->setAttribute('schemaLocation', './basetypes.xsd');
+        $schema->appendChild($import);
         $methods = $this->annotatedController->getMethods();
         foreach( $methods as $method )
         { 
@@ -26,6 +37,9 @@ class WSDLDocument extends DOMDocument{
             $schema->appendChild($this->_generateRElement('Request'));
             $schema->appendChild($this->_generateRElement('Response'));
         }
+        $types = $this->createElement('wsdl:types');
+        $types->appendChild($schema);
+        $defs->appendChild($types); 
 
     }
     private function _generateRElement ($type = 'Request')
@@ -59,7 +73,6 @@ class WSDLDocument extends DOMDocument{
         }
 
     }
-    
 }
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
@@ -86,26 +99,10 @@ else
             $defs = $doc->createElementNS('http://schemas.xmlsoap.org/wsdl/', 'wsdl:definitions');
             $defs->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api');
             $defs->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api');
-            $schema = $doc->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
-            $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
-            $schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
-            $schema->setAttribute('elementFormDefault', 'qualified'); 
-            $schema->setAttribute('xmlns:tns', 'http://@PROJECTNAME@/schemas/api'); 
-            $schema->setAttribute('xmlns:base', 'http://@PROJECTNAME@/schemas/basetypes'); 
 
-            $import = $doc->createElement('xsd:import');
-            $import->setAttribute('namespace', 'http://@PROJECTNAME@/schemas/basetypes');
-            $import->setAttribute('schemaLocation', './basetypes.xsd');
-            $schema->appendChild($import);
+            $doc->generateTypes($defs);
 
 
-
-            $doc->generateTypes($schema);
-
-
-            $types = $doc->createElement('wsdl:types');
-            $types->appendChild($schema);
-            $defs->appendChild($types); 
             $portType = $doc->createElement('wsdl:portType');
             $portType->setAttribute('name', '@PROJECTNAME@');
             $binding =  $doc->createElement('wsdl:binding');
