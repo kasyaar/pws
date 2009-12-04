@@ -7,6 +7,7 @@ class WSDLDocument extends DOMDocument{
         $annotatedController,
         $definitions,
         $schema,
+        $types,
         $currentMethod,
         $namePostfixes = array(
             'Request' => 'Input',
@@ -17,7 +18,7 @@ class WSDLDocument extends DOMDocument{
     {
         parent::__construct('1.0', 'utf-8');
         $this->annotatedController = $annotatedController;
-        $this->_createSchema();
+        $this->_createTypesSection();
         $this->_createPortType();
     }
     public function generate ($defs)
@@ -32,16 +33,14 @@ class WSDLDocument extends DOMDocument{
             $defs->appendChild($this->_generateWSDLMessage('Response'));
             $this->portType->appendChild($this->_generateOperation());
         }
-        $types = $this->createElement('wsdl:types');
-        $types->appendChild($this->schema);
-        $defs->appendChild($types); 
+        $defs->appendChild($this->types); 
         $defs->appendChild($this->portType);
 
     }
     private function _generateOperation ()
     {
         $operation  = $this->createElement('wsdl:operation');
-        $operation->setAttribute('name', $method->name); 
+        $operation->setAttribute('name', $this->currentMethod->name); 
         $operation->appendChild($this->_generateOperationPart('Request'));
         $operation->appendChild($this->_generateOperationPart('Response'));
         return $operation;
@@ -55,7 +54,7 @@ class WSDLDocument extends DOMDocument{
     }
     
 
-    private function _createSchema ()
+    private function _createTypesSection ()
     {
         $this->schema = $this->createElementNS('http://www.w3.org/2001/XMLSchema', 'xsd:schema');
         $this->schema->setAttribute('targetNamespace', 'http://@PROJECTNAME@/schemas/api'); 
@@ -68,8 +67,11 @@ class WSDLDocument extends DOMDocument{
         $import->setAttribute('namespace', 'http://@PROJECTNAME@/schemas/basetypes');
         $import->setAttribute('schemaLocation', './basetypes.xsd');
         $this->schema->appendChild($import);
+        $this->types = $this->createElement('wsdl:types');
+        $this->types->appendChild($this->schema);
 
     }
+
 
     private function _createPortType ()
     {
@@ -150,8 +152,6 @@ else
             $doc->generate($defs);
 
 
-            $portType = $doc->createElement('wsdl:portType');
-            $portType->setAttribute('name', '@PROJECTNAME@');
             $binding =  $doc->createElement('wsdl:binding');
             $binding->setAttribute('name', 'skelSOAP');
             $binding->setAttribute('type', 'tns:@PROJECTNAME@');
@@ -175,7 +175,6 @@ else
                 $operation->appendChild($input);
                 $operation->appendChild($output);
                 $binding->appendChild($operation);
-
 
             }
             $defs->appendChild($binding);
