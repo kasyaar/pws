@@ -1,5 +1,6 @@
 <?php
 include_once 'addendum/annotations.php';
+
 class WSDLDocument extends DOMDocument{
     private
         $projectName,
