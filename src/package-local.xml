@@ -13,12 +13,12 @@
  <date>2009-12-04</date>
  <time>19:43:53</time>
  <version>
-  <release>0.1.0</release>
-  <api>0.1.0</api>
+  <release>0.2.0</release>
+  <api>0.2.0</api>
  </version>
  <stability>
-  <release>alpha</release>
-  <api>alpha</api>
+  <release>beta</release>
+  <api>beta</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
  <notes>
@@ -80,7 +80,6 @@ notes
     <name>phing</name>
     <channel>pear.phing.info</channel>
     <min>2.3.3</min>
-    <max>2.3.3</max>
    </package>
   </required>
  </dependencies>

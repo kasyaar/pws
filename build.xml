@@ -10,10 +10,10 @@
         </if>
         <exec command="pear package ${src.dir}/package-local.xml > /tmp/result" />
     </target>
-    <target name="buildrelease">
-        <delete file="PWS-${pkg.version}.tgz" />
-        <exec command="pear package ${src.dir}/package.xml " />
-    </target>
+    <!--<target name="buildrelease">-->
+        <!--<delete file="PWS-${pkg.version}.tgz" />-->
+        <!--<exec command="pear package ${src.dir}/package.xml " />-->
+    <!--</target>-->
     <target name="uninstall" depends="build">
         <exec command="sudo pear uninstall __uri/PWS" checkReturn="true"/>
     </target>
